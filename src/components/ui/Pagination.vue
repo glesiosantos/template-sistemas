@@ -1,0 +1,6 @@
+<script setup lang="ts">
+const props = defineProps<{ currentPage: number; totalPages: number; from: number; to: number; total: number }>()
+const emit = defineEmits<{ change: [page: number] }>()
+const pages = () => Array.from({ length: props.totalPages }, (_, index) => index + 1)
+</script>
+<template><div class="flex flex-wrap items-center justify-between gap-4 pt-5 text-sm text-neutral-500"><span>{{ from }}-{{ to }} de {{ total }} tipos de atendimento</span><nav class="flex items-center gap-1" aria-label="Paginação"><button aria-label="Página anterior" class="rounded-lg px-2 py-1.5 hover:bg-neutral-100 disabled:opacity-30" :disabled="currentPage <= 1" @click="emit('change', currentPage - 1)">‹</button><button v-for="page in pages()" :key="page" :aria-label="`Ir para a página ${page}`" :aria-current="page === currentPage ? 'page' : undefined" class="min-w-8 rounded-lg px-2 py-1.5 hover:bg-neutral-100" :class="page === currentPage ? 'bg-[var(--color-surface-selected)] font-medium text-neutral-900' : ''" @click="emit('change', page)">{{ page }}</button><button aria-label="Próxima página" class="rounded-lg px-2 py-1.5 hover:bg-neutral-100 disabled:opacity-30" :disabled="currentPage >= totalPages" @click="emit('change', currentPage + 1)">›</button></nav></div></template>
