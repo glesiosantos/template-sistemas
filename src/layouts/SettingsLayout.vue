@@ -9,4 +9,4 @@ const layout = useLayoutStore()
 watch(() => layout.mobileDrawerOpen, (open) => { document.body.style.overflow = open ? 'hidden' : '' })
 onBeforeUnmount(() => { document.body.style.overflow = '' })
 </script>
-<template><div class="flex h-dvh min-h-0 overflow-hidden bg-white"><AppSidebar /><SettingsSidebar /><div class="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"><MobileHeader @menu="layout.openMobileDrawer" /><MobileDrawer :open="layout.mobileDrawerOpen" @close="layout.closeMobileDrawer" /><slot /></div></div></template>
+<template><div class="flex h-dvh min-h-0 overflow-hidden bg-white"><AppSidebar /><div class="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:pl-[72px]"><MobileHeader @menu="layout.openMobileDrawer" /><MobileDrawer :open="layout.mobileDrawerOpen" @close="layout.closeMobileDrawer" /><div class="flex min-h-0 min-w-0 flex-1"><SettingsSidebar /><slot /></div></div></div></template>
