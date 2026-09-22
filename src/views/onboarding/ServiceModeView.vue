@@ -1,0 +1,6 @@
+<script setup lang="ts">
+import { ref } from 'vue'; import { useRouter } from 'vue-router'; import BaseButton from '../../components/ui/BaseButton.vue'; import OnboardingOption from '../../components/onboarding/OnboardingOption.vue'; import { useCompanyOnboardingStore } from '../../stores/companyOnboarding'
+const router = useRouter(); const store = useCompanyOnboardingStore(); const error = ref(''); const options = [{ label: 'Presencial', value: 'in_person' }, { label: 'Online', value: 'online' }, { label: 'Os dois', value: 'hybrid' }]
+function next() { error.value = store.state.profile.serviceMode ? '' : 'Escolha uma forma de atendimento.'; if (error.value) return; store.nextStep(); router.push('/cadastro/resumo') }
+</script>
+<template><section><h1 class="text-3xl font-medium tracking-tight sm:text-4xl">Como sua empresa atende?</h1><div class="mt-10 grid gap-3 sm:grid-cols-2"><OnboardingOption v-for="option in options" :key="option.value" :label="option.label" :value="option.value" :selected="store.state.profile.serviceMode === option.value" @select="store.updateProfile({ serviceMode: $event })" /></div><p v-if="error" class="mt-3 text-sm text-red-600">{{ error }}</p><BaseButton class="mt-8 min-h-[56px] w-full text-base sm:min-h-[68px] sm:text-lg" @click="next">Continuar</BaseButton></section></template>
